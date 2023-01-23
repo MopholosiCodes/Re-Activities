@@ -13,6 +13,18 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Add cors to elliviate security policy to eliviate blocks from client HTTP requests
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("CorsPolicy", policy => 
+    {
+        policy
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins("http://localhost:3000");
+    });
+});
+
 var app = builder.Build();
 /* Configure the HTTP request pipeline. Middleware. Interact with 
 HTTP requests on their way in/out of the api referred to as a pipeline */
@@ -22,6 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("CorsPolicy");
 // directs request to relevent controller
 app.MapControllers();
 /* dependency injection - the using stateent allows for the 
