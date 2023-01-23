@@ -22,14 +22,10 @@ namespace API.Controllers
         Solution: Add Microsoft.EntityFrameworkCore namespace */
         [HttpGet] // api/Activities/GetActivities
         public async Task<ActionResult<List<Activities>>> GetActivities()
-        {
-            return await _context.Activities.ToListAsync();
-        }
-
+            => await _context.Activities.ToListAsync();
+        
         [HttpGet("{id}")] // api/Activities/GetActivities/requiredID
         public async Task<ActionResult<Activities>> GetActivity(Guid id)
-        {
-            return await _context.Activities.FindAsync(id);
-        }
+            => await _context.Activities.FindAsync(id);
     }
 }
